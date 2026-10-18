@@ -11,6 +11,8 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+
+    alias(libs.plugins.kotlin.serialization)
 }
 
 repositories {
@@ -29,6 +31,10 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+
+    implementation("com.jsoizo:kotlin-csv:2.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -40,10 +46,14 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.example.AppKt"
+    mainClass = "MainKt"
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }
